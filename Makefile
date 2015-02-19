@@ -17,6 +17,7 @@ MODULES= \
 B=my_typerep
 T=$B.cmxa
 FOR_PACK_OPT=-for-pack My_typerep
+
 ### RULES ##########################################################
 
 SYNTAX_PACKAGES=$(addsuffix .syntax, $(SYNTAX))
@@ -30,7 +31,12 @@ ifdef SYNTAX
   endif
 endif
 
-OCAMLOPT_FLAGS=$(FIND_OPTS) -thread -linkpkg -w YSPUZF -warn-error YSPUZ
+OCAMLOPT_FLAGS=\
+  $(FIND_OPTS) \
+  -thread \
+  -linkpkg \
+  -w +Y+S+P+U+Z+F-40-41-42 \
+  -warn-error +Y+S+P+U+Z-40-41-42
 
 OCAMLC=ocamlfind ocamlc $(INCLUDES)
 OCAMLOPT=ocamlfind ocamlopt $(INCLUDES)
@@ -95,4 +101,3 @@ clean:
 	rm -rf .depend *.o *.a *.cmi *.cmo *.cma *.cmx *.cmxa *.exe
 
 include .depend
-
